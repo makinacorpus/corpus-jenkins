@@ -11,16 +11,12 @@ include:
 {% endmacro%}
 {{h.deliver_config_files(data.configs, after_macro=varsh)}}
 
-echo restart:
-  cmd.run:
-    - watch_in:
-      - mc_proxy: circus-pre-restart
-
 # our wrapper drop privs after setting ulimits
 {% set circus_data = {
      'cmd': cfg.data_root+'/launcher.sh',
      'uid': cfg.user,
      'gid': cfg.group,
+     'force_restart': true,
      'copy_env': True,
      'working_dir': data.var,
      'warmup_delay': "30",
