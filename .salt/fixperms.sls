@@ -25,6 +25,7 @@
               --dmode '0770' --fmode '0770'  \
               --paths "{{cfg.project_root}}" \
               --paths "{{cfg.data_root}}" \
+              --users jenkins \
               --users www-data \
               --users {% if not cfg.no_user%}{{cfg.user}}{% else -%}root{% endif %} \
               --groups {{cfg.group}} \
@@ -37,6 +38,7 @@
               --paths "{{cfg.project_dir}}" \
               --paths "{{cfg.project_dir}}"/.. \
               --paths "{{cfg.project_dir}}"/../.. \
+              --users jenkins \
               --users www-data ;
             fi
   cmd.run:

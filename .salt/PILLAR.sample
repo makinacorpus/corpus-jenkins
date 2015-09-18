@@ -1,4 +1,3 @@
-#
 # This file contains default values which are used
 # by the salt states deploying your project.
 # you may copy them to your relevant PILLAR file
@@ -11,21 +10,45 @@
 # the current projectname
 # you can also merge parts of this file
 # with the relevant pillar
-#
-# think that dicts are updated/merged with default
-# but lists are overidden
+
+# makina-states mysql configuration (copy in your pillar,
+#                                    uncomment and edit)
+# makina-states.services.db.mysql.available_mem: 1500
+# corpus mysql project configuration
+
+{% set files="salt://makina-projects/{name}/files" %}
 makina-projects.projectname:
   data:
-    opt: value
-    password: SecretToBeChangedInsidePillar
-  env_defaults:
-    dev:
-      opt: value2
-  os_defaults:
-    Ubuntu:
-# os  filter
-      opt: value1
-    Debian:
-# os familly filter
-      opt1: value11
+    domain: '{fqdn}'
+    server_aliases: []
+    password: "secret"
+    host: "127.0.0.1"
+    port: "8080"
+    www_dir: '{data_root}/www'
+    htaccess: '/etc/{name}.webaccess'
+    nginx_vhost: "salt://makina-projects/{name}/files/nginx.conf"
+    nginx_top: "salt://makina-projects/{name}/files/nginx.top.conf"
+    var: "{data_root}/var"
+    configs:
+      launcher.sh:
+        target: "{data_root}/launcher.sh"
+        source: "{{files}}/launcher.sh"
+        user: "{user}"
+        group: "{user}"
+        mode: 750
+      env.sh:
+        target: "{data_root}/env.sh"
+        source: "{{files}}/env.sh"
+        user: "{user}"
+        group: "{user}"
+        mode: 640
+    env:
+      HTTP_PORT: "{port}"
+      JAVA_ARGS: >-
+                 -Xmx512m -Xms256m -Djava.awt.headless=true
+                 -Djava.net.preferIPv4Stack=true
+    # http_users:
+    #   - root: foo
+    # users:
+    #   - foo: {password: 123}
 # vim:set ft=sls:
