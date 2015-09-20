@@ -20,6 +20,7 @@
 makina-projects.projectname:
   data:
     domain: '{fqdn}'
+    force_ssl: true
     server_aliases: []
     password: "secret"
     host: "127.0.0.1"
@@ -29,6 +30,8 @@ makina-projects.projectname:
     nginx_vhost: "salt://makina-projects/{name}/files/nginx.conf"
     nginx_top: "salt://makina-projects/{name}/files/nginx.top.conf"
     var: "{data_root}/var"
+    builds: "{data_root}/builds"
+    no_ssh_shared_key: false
     configs:
       launcher.sh:
         target: "{data_root}/launcher.sh"

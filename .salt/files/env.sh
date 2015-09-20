@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-. /etc/default/jenkins
 {% set cfg = salt['mc_project.get_configuration'](cid) %}
-{% for i,val in cfg.data.env.items() %}
+{% for i,val in cfg.data.env.items() %} 
+for i in /etc/default/jenkins "{{cfg.data_root}}/jenkins-default";do
+    if test -r "{i}";then
+        source "${i}"
+    fi
+done
 {{i}}="{{val}}"
 export {{i}}
 {% endfor %}

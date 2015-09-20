@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 {% set cfg = salt['mc_project.get_configuration'](cid) %}
+set -x
 . $(dirname $0)/env.sh
 if [ -n "$MAXOPENFILES" ]; then
     [ "$VERBOSE" != no ] && echo Setting up max open files limit to $MAXOPENFILES

@@ -17,6 +17,33 @@ include:
     - watch_in:
       - cmd: {{cfg.name}}-restricted-perms
 
+{% if not data.get('no_ssh_shared_key', False) %}
+{% for i in ['id_rsa', 'id_rsa.pub']%}
+{{cfg.name}}-create_key-{{i}}:
+  file.managed:
+    - name: "{{cfg.data_root}}/{{i}}"
+    - source: "/root/.ssh/{{i}}"
+    - user: {{cfg.user}}
+    - group: {{cfg.group}}
+    - mode: 700
+    - watch_in:
+      - cmd: {{cfg.name}}-restricted-perms
+{% endfor%}
+{% endif%}
+
+{#
+{{cfg.name}}-create_root-de:
+  file.managed:
+    - name: "{{cfg.data_root}}/jenkins-default"
+    - source: "/etc/default/jenkins"
+    - onlyif: test ! -e  "{{cfg.data_root}}/jenkins-default"
+    - user: {{cfg.user}}
+    - group: {{cfg.group}}
+    - mode: 755
+    - watch_in:
+      - cmd: {{cfg.name}}-restricted-perms
+#}
+
 {{cfg.name}}-create_root-d:
   file.absent:
     - name: /var/lib/jenkins
@@ -30,3 +57,4 @@ include:
     - target: {{data.var}}
     - watch:
       - file: {{cfg.name}}-create_root-d
+

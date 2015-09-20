@@ -5,10 +5,6 @@ include:
   - makina-states.localsettings.jdk
   - makina-states.services.http.nginx
 
-{% for mod, ext in data.get('php_exts', {}).items() %}
-{{ macros.toggle_ext(ext, True) }}
-{% endfor %}
-
 prepreqs-{{cfg.name}}:
   pkgrepo.managed:
     - humanname: jenkins apt
@@ -72,6 +68,7 @@ prepreqs-{{cfg.name}}:
 {{cfg.name}}-create_root:
   file.directory:
     - names:
+      - "{{data.builds}}"
       - "{{data.var}}"
       - "{{data.www_dir}}"
     - user: {{cfg.user}}
