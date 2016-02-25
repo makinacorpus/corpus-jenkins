@@ -70,6 +70,7 @@ prepreqs-{{cfg.name}}:
     - names:
       - "{{data.builds}}"
       - "{{data.var}}"
+      - "{{data.cache}}"
       - "{{data.www_dir}}"
     - user: {{cfg.user}}
     - group: {{cfg.group}}

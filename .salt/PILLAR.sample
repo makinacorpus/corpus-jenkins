@@ -30,6 +30,7 @@ makina-projects.projectname:
     nginx_vhost: "salt://makina-projects/{name}/files/nginx.conf"
     nginx_top: "salt://makina-projects/{name}/files/nginx.top.conf"
     var: "{data_root}/var"
+    cache: "{data_root}/cache"
     builds: "{data_root}/builds"
     no_ssh_shared_key: false
     configs:
