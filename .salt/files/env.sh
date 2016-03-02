@@ -2,7 +2,7 @@
 {% set cfg = salt['mc_project.get_configuration'](cid) %}
 for i in /etc/default/jenkins "{{cfg.data_root}}/jenkins-default";do
     if test -r "${i}";then
-        source "${i}"
+        . "${i}"
     fi
 done
 {% for i,val in cfg.data.env.items() %}
