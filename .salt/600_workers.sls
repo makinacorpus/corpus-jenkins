@@ -19,8 +19,8 @@ echo restart:
 # our wrapper drop privs after setting ulimits
 {% set circus_data = {
      'cmd': cfg.data_root+'/launcher.sh',
-     'uid': 'jenkins',
-     'gid': 'jenkins',
+     'uid': cfg.user,
+     'gid': cfg.group,
      'copy_env': True,
      'working_dir': data.var,
      'warmup_delay': "30",
