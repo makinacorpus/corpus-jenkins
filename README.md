@@ -19,6 +19,9 @@ Install Procedure
     - Cobertura Plugin
     - xunit
 
+- For now, Update Git Parameter plugin from: https://github.com/makinacorpus/corpus-jenkins/releases/tag/plugins
+  to enable ssh agent forwarding upon git parameter enablement
+
 - Configure security
     - local bdd
     - create admin user

@@ -17,6 +17,13 @@ include:
     - watch_in:
       - cmd: {{cfg.name}}-restricted-perms
 
+{{cfg.name}}-create_cache:
+  cmd.run:
+    - name: rsync -azv "/var/lib/jenkins/" "{{data.cache}}/"
+    - onlyif: test ! -e "{{data.var}}/jobs/"
+    - watch_in:
+      - cmd: {{cfg.name}}-restricted-perms
+
 {% if not data.get('no_ssh_shared_key', False) %}
 {% for i in ['id_rsa', 'id_rsa.pub']%}
 {{cfg.name}}-create_key-{{i}}:
@@ -58,3 +65,17 @@ include:
     - watch:
       - file: {{cfg.name}}-create_root-d
 
+{{cfg.name}}-create_cache-d:
+  file.absent:
+    - name: /var/cache/jenkins
+    - onlyif: test -e /var/cache/jenkins && test ! -h /var/lib/cache
+    - watch:
+      - cmd: {{cfg.name}}-create_cache
+
+{{cfg.name}}-create_cache-l:
+  file.symlink:
+    - name: /var/cache/jenkins
+    - target: {{data.cache}}
+    - watch:
+      - file: {{cfg.name}}-create_cache-d
+ 
